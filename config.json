@@ -28,7 +28,7 @@
     "g4s": {
       "username": "test",
       "password": "test",
-      "pin": "1234",
+      "pin": "1234"
     },
     "mqtt": {
       "host": "localhost",
@@ -42,7 +42,7 @@
     "risco": {
       "username": "str",
       "password": "str",
-      "pin": "str",
+      "pin": "str"
     },
     "mqtt": {
       "host": "str",

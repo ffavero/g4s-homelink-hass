@@ -15,13 +15,13 @@ sudo chmod g+rwx "/home/$USER/.docker" -R
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-docker run -it --rm --privileged --name "risco-hass-bridge" \
+docker run -it --privileged --rm --name "g4s-homelink-hass" \
     -v ~/.docker:/root/.docker \
     -v "$(pwd)":/docker \
     hassioaddons/build-env:latest \
     --git \
     --$ARCH \
-    --push \
     --from "homeassistant/{arch}-base" \
-    --author "Martin Grayson <martin@mgrayson.co.uk>" \
-    --doc-url "https://github.com/martingrayson/risco-hass-bridge"
+    --author "Francesco Favero <favero.francesco@gmail.com>" \
+    --doc-url "https://github.com/ffavero/g4s-homelink-hass" \
+    -d "G4S homelink"

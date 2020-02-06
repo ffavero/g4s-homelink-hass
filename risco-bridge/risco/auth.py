@@ -14,11 +14,10 @@ class UserAuth:
 class PinAuth:
     """ Models pin authentication, used during site selection. """
 
-    def __init__(self, pin: int, site_id: str, lang='en-gb'):
+    def __init__(self, pin: int, lang='en-gb'):
         self.pin = pin
-        self.site_id = site_id
         self.lang = lang
 
     def to_json(self) -> dict:
         """ Return a dictionary in the format required to authenticate with Risco """
-        return {"Pin": self.pin, "SelectedSiteId": self.site_id, "langId": self.lang}
+        return {"Pin": self.pin, "langId": self.lang}

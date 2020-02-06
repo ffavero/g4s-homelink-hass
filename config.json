@@ -1,9 +1,9 @@
 {
-  "name": "Risco HASS Bridge",
+  "name": "G4S homelink",
   "version": "dev",
-  "slug": "risco_hass_bridge",
-  "description": "Sync Risco Alarm System to HASS",
-  "url": "https://github.com/martingrayson/risco-hass-bridge",
+  "slug": "g4s_homelink_hass",
+  "description": "Sync G4S homelink Alarm System to HASS",
+  "url": "https://github.com/ffavero/g4s-homelink-hass",
   "startup": "before",
   "arch": [
     "aarch64",
@@ -25,11 +25,10 @@
   ],
   "options": {
     "poll_interval": 120,
-    "risco": {
+    "g4s": {
       "username": "test",
       "password": "test",
       "pin": "1234",
-      "site_id": "test"
     },
     "mqtt": {
       "host": "localhost",
@@ -44,7 +43,6 @@
       "username": "str",
       "password": "str",
       "pin": "str",
-      "site_id": "str"
     },
     "mqtt": {
       "host": "str",
@@ -53,5 +51,5 @@
       "password": "str?"
     }
   },
-  "image": "mgrayson/{arch}-risco-hass-bridge"
+  "image": "francescof/{arch}-g4s-homelink-hass"
 }

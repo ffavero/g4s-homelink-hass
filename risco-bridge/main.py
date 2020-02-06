@@ -12,9 +12,9 @@ from util.logging_mixin import LoggingMixin
 
 class RiscoHassBridge(LoggingMixin):
     def __init__(self, mqtt_host: str, mqtt_port: int, mqtt_username: str, mqtt_password: str, risco_username: str,
-                 risco_password: str, risco_pin: int, risco_site_id: str, poll_interval=60):
+                 risco_password: str, risco_pin: int, poll_interval=60):
         self.risco = RiscoCloudHandler(UserAuth(risco_username, risco_password),
-                                       PinAuth(risco_pin, risco_site_id))
+                                       PinAuth(risco_pin))
 
         self.mqtt_pub = MQTTPublisher(mqtt_host, mqtt_port, mqtt_username, mqtt_password)
         self.mqtt_sub = MQTTSubscriber(mqtt_host, mqtt_port, mqtt_username, mqtt_password)
@@ -67,7 +67,6 @@ def main():
     parser.add_argument('--risco_username', required=True)
     parser.add_argument('--risco_password', required=True)
     parser.add_argument('--risco_pin', required=True)
-    parser.add_argument('--risco_site_id', required=True)
     parser.add_argument('--poll_interval', type=int, default=60, required=False)
     #parser.add_argument('--log-level', required=False) #TODO: Implement
 

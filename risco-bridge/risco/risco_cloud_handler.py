@@ -40,6 +40,7 @@ class RiscoCloudHandler(LoggingMixin):
         if self._is_expired():
             self.session.close()
             self.session = requests.session()
+            self.session.verify = False
 
             self._authenticate()
 
@@ -112,11 +113,11 @@ class RiscoCloudHandler(LoggingMixin):
 
         if is_triggered:
             state = AlarmState.TRIGGERED
-        if int(part_info.get('armedStr')[0]) > 0:
+        if int(part_info.get('armedStr')) == "Yes":
             state = AlarmState.ARMED
-        elif int(part_info.get('disarmedStr')[0]) > 0:
+        elif int(part_info.get('disarmedStr')[0]) == "Yes":
             state = AlarmState.DISARMED
-        elif int(part_info.get('partarmedStr')[0]) > 0:
+        elif int(part_info.get('partarmedStr')[0]) > "Yes":
             state = AlarmState.PART_ARMED
 
         self.logger.debug("Alarm state %s", state)

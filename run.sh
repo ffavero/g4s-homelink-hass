@@ -9,10 +9,10 @@ PORT=$(jq --raw-output ".mqtt.port" $CONFIG_PATH)
 USER=$(jq --raw-output ".mqtt.username" $CONFIG_PATH)
 PASSWORD=$(jq --raw-output ".mqtt.password" $CONFIG_PATH)
 
-RISCO_USER=$(jq --raw-output ".risco.username" $CONFIG_PATH)
-RISCO_PASSWORD=$(jq --raw-output ".risco.password" $CONFIG_PATH)
-RISCO_PIN=$(jq --raw-output ".risco.pin" $CONFIG_PATH)
-RISCO_SITE=$(jq --raw-output ".risco.site_id" $CONFIG_PATH)
+RISCO_USER=$(jq --raw-output ".g4s.username" $CONFIG_PATH)
+RISCO_PASSWORD=$(jq --raw-output ".g4s.password" $CONFIG_PATH)
+RISCO_PIN=$(jq --raw-output ".g4s.pin" $CONFIG_PATH)
+RISCO_SITE=$(jq --raw-output ".g4s.site_id" $CONFIG_PATH)
 
 POLL_INTERVAL=$(jq --raw-output ".poll_interval" $CONFIG_PATH)
 

@@ -59,7 +59,7 @@ class RiscoCloudHandler(LoggingMixin):
         expires = None
         for cookie in self.session.cookies:
             if cookie.name == 'RUCCookie':
-            expires = cookie.expires
+                expires = cookie.expires
 
         expired_flag = True
         if datetime.now() <= datetime.fromtimestamp(expires):

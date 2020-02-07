@@ -1,6 +1,6 @@
 {
   "name": "G4S homelink",
-  "version": "dev",
+  "version": "test",
   "slug": "g4s_homelink_hass",
   "description": "Sync G4S homelink Alarm System to HASS",
   "url": "https://github.com/ffavero/g4s-homelink-hass",

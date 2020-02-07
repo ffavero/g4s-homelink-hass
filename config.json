@@ -39,7 +39,7 @@
   },
   "schema": {
     "poll_interval": "int",
-    "risco": {
+    "g4s": {
       "username": "str",
       "password": "str",
       "pin": "str"

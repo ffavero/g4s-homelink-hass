@@ -13,7 +13,7 @@ from util.logging_mixin import LoggingMixin
 class RiscoHassBridge(LoggingMixin):
     def __init__(self, mqtt_host: str, mqtt_port: int, mqtt_username: str, mqtt_password: str, risco_username: str,
                  risco_password: str, risco_pin: int, poll_interval=60):
-        self.risco = RiscoCloudHandler(UserAuth(risco_username, risco_password),
+        self.risco = RiscoCloudHandler(UserAuth(risco_username, risco_password, risco_pin),
                                        PinAuth(risco_pin))
 
         self.mqtt_pub = MQTTPublisher(mqtt_host, mqtt_port, mqtt_username, mqtt_password)

@@ -2,6 +2,7 @@ import json
 
 import requests
 from tenacity import wait_exponential, retry
+from datetime import datetime
 
 from hass.static import AlarmState
 from risco.static import RISCO_BASE_URL, ENDPOINTS, AlarmCommand
@@ -41,7 +42,6 @@ class RiscoCloudHandler(LoggingMixin):
             self.session = requests.session()
 
             self._authenticate()
-            self._select_site()
 
     @retry(wait=wait_exponential(multiplier=1, min=4, max=10))
     def _authenticate(self):
@@ -50,37 +50,25 @@ class RiscoCloudHandler(LoggingMixin):
         self.logger.debug("Hitting: %s" % endpoint)
         resp = self.session.post(endpoint, data=self.user_auth.to_json())
         resp.raise_for_status()
-
-        return resp
-
-    @retry(wait=wait_exponential(multiplier=1, min=4, max=10))
-    def _select_site(self):
-        """Second stage of authentication with Risco. Selects and activates a site."""
-        endpoint = RISCO_BASE_URL + ENDPOINTS['SITE_SELECT']
-        self.logger.debug("Hitting: %s" % endpoint)
-        resp = self.session.post(endpoint, data=self.pin_auth.to_json())
-        resp.raise_for_status()
-
         return resp
 
     def _is_expired(self) -> bool:
         """Checks the Risco endpoint to verify if our session is still active. Any connection errors also return False.
         :return: True if session has expired. False otherwise.
         """
-        endpoint = RISCO_BASE_URL + ENDPOINTS['CHECK_EXPIRED']
-        self.logger.debug("Hitting: %s" % endpoint)
-
-        try:
-            resp = self.session.post(endpoint)
-            resp_message = resp.json()
-            resp.raise_for_status()
-        except Exception as e:
-            self.logger.error(e)
-            return True
+        expires = None
+        for cookie in self.session.cookies:
+            if cookie.name == 'RUCCookie':
+            expires = cookie.expires
 
         expired_flag = True
-        if resp_message.get('error', 0) == 0 and not resp_message.get('pinExpired', False):
-            expired_flag = False
+        if datetime.now() <= datetime.fromtimestamp(expires):
+            endpoint = RISCO_BASE_URL + ENDPOINTS['GET_CP_STATE'] + "?userIsAlive=true"
+            self.logger.debug("Hitting: %s" % endpoint)
+            resp = self.session.post(endpoint)
+            resp_message = resp.json()
+            if resp_message.get('error', 0) == 0:
+                expired_flag = False
 
         self.logger.debug("Session active: %s", expired_flag)
         return expired_flag

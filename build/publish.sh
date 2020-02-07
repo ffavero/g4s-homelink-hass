@@ -10,18 +10,19 @@ fi
 
 git status
 
-sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
-sudo chmod g+rwx "/home/$USER/.docker" -R
+sudo chown -R "$USER":"$GROUPS" ~/.docker
+sudo chmod -R g+rwx ~/.docker
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 docker run -it --privileged --rm --name "g4s-homelink-hass" \
-    -v ~/.docker:/root/.docker \
-    -v "$(pwd)":/docker \
     hassioaddons/build-env:latest \
     --git \
     --$ARCH \
     --from "homeassistant/{arch}-base" \
     --author "Francesco Favero <favero.francesco@gmail.com>" \
-    --doc-url "https://github.com/ffavero/g4s-homelink-hass" \
-    -d "G4S homelink"
+    --repository "https://github.com/ffavero/g4s-homelink-hass" \
+    -d "G4S homelink" --push \
+    --login $DOCKER_USERNAME --password $DOCKER_PASSWORD
+#    -v ~/.docker:/root/.docker \
+#    -v "$(pwd)":/docker \

@@ -1,16 +1,18 @@
-# Risco Alarm to Home Assistant via MQTT
+# G4S Alarm to Home Assistant via MQTT
 ## Introduction
 Monitor and control your Risco alarm using Home Assistant.
 
-This application monitors an MQTT topic and relays commands to the Risco Cloud using their API. This allows you to arm, disarm and part arm your alarm system by publishing messages on the `command` topic.
+This application monitors an MQTT topic and relays commands to the G4S homelink (Denmark) using their API. This allows you to arm, disarm and part arm your alarm system by publishing messages on the `command` topic.
 
 Another status checker thread polls the Risco API to check the status of your alarm system. Status messages a broadcast on a `state` topic periodically.
 
-*WARNING*: This application was written for my own use, you may use it at your own risk. I can not be held responsible for your use of the information and software contained within this repo. 
+*WARNING*: This application was created with minimal modification from the [risco-hass-bridge](https://github.com/martingrayson/risco-hass-bridge).
+Both projects, the original risco-hass-bridge and this one, are meant for personal use and, nor I or the origian developer can not be held responsible
+for your use of the information and software contained within this repo. 
 
 
 ## Configuration
-The configuration of the plugin is fairly straight forward. You'll need a [Risco Cloud](https://www.riscocloud.com/ELAS/WebUI/) login and an MQTT Broker configured.
+The configuration of the plugin is fairly straight forward. You'll need a [G4S homelink](https://homelink.g4s.dk/ELAS/WebUI) login and an MQTT Broker configured.
 
 The MQTT configuration is self explanatory:
 ```json
@@ -21,21 +23,14 @@ The MQTT configuration is self explanatory:
       "password": "Optional password to connect to MQTT" 
     }
 ```
-
-Within the Risco Could, it is advisable to create a dedicated service account for this application to use, you can create a new account within the [Web UI](https://www.riscocloud.com/ELAS/WebUI/). The `username`, `password` and `pin` can be added to the plugin config as below:
+The G4S login configuration
 ```json
-"risco": {
+"g4s": {
       "username": "user@test.com",
       "password": "a_secure_password",
       "pin": "1337",
-      "site_id": "as_shown_above"
     }
 ```
-
-To find your `site_id`, login to [Risco Cloud](https://www.riscocloud.com/ELAS/WebUI/) using Chrome. Before entering your PIN, view the source of the page and find the `<div class="site-name"` attribute.
-The numerical value in the ID of the div is your site id, i.e. `1337` in the below example.
-
-`<div class="site-name" id="site_1337_div">`
 
 ## Integration with Home Assistant
 It is possible to integrate this addon with Home Assistant in a few different ways, namely:
